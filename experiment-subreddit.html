@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subreddit Collation</title>
+    <link rel="stylesheet" href="./styles.css"/>   
+</head>
+<body>
+<h1 class="title">Subreddit Hot Topics</h1>
+<div id="sub-input-container">
+<label for="sub-input">Enter subreddit:</label>
+<input type="text" id="sub-input" placeholder="Eg. AskHistorians"/>
+<button type="button" id="sub-btn">Add Subreddit</button>
+<button type="button" id="clear-btn">Clear All</button>
+</div>
+<ul id="subreddit-list"></ul>
+<main>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th id="topics">Topics</th>
+                    <th id="likes">Likes</th>
+                    <th id="upvote-ratio">Upvote-Ratio</th>
+                    <th id="replies">Replies</th>
+                      
+                </tr>
+            </thead>
+            <tbody id="posts-container"></tbody>
+        </table>
+
+
+    </div>    
+</main>
+<script src="./experiment-subreddit.js"></script>    
+</body>    
+</html>
