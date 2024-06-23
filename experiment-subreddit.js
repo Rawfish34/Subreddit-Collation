@@ -5,10 +5,24 @@ const sub_input=document.getElementById("sub-input");
 const sub_button=document.getElementById("sub-btn");
 const clear_all_button=document.getElementById("clear-btn")
 const subsFromLocalStorage=JSON.parse(localStorage.getItem("subreddits"));
+const sub_length_input=document.getElementById("sub-length");
+const sub_length_button=document.getElementById("sub-length-btn");
+var subLength=10;
 
 //EVENT LISTENERS
 sub_button.addEventListener("click",addSub)
+sub_input.addEventListener("keydown",(e)=>{
+    if (e.key==="Enter"){
+        addSub();
+    }
+})
 clear_all_button.addEventListener("click",clear_all)
+sub_length_button.addEventListener("click", changeLength)
+sub_length_input.addEventListener("keydown",(e)=>{
+    if (e.key==="Enter"){
+        changeLength();
+    }
+})
 
 //LOCAL STORAGE
 if (subsFromLocalStorage){
@@ -21,6 +35,13 @@ function clear_all(){
     subreddit_arr=[];
     process_subs(subreddit_arr);
 
+}
+
+//CHANGE LENGTH
+function changeLength(){
+    subLength=sub_length_input.value;
+    process_subs(subreddit_arr);
+    sub_length_input.value='';
 }
 
 //PROCESS ARRAY
@@ -55,7 +76,7 @@ async function fetchSubTopics(subreddit){
 function captureData(data){
     console.log(data)
     const data_children=data.data.children;
-    const children_arr_sliced=data_children.slice(0,9)
+    const children_arr_sliced=data_children.slice(0,`${subLength}`)
     process_data(children_arr_sliced)
 }
 
@@ -63,12 +84,19 @@ function process_data(obj){
     var subreddit_name=obj[0].data.subreddit;
     postsContainer.innerHTML+=`<tr class="subreddit-title">${subreddit_name}</tr>`
     let html='';
-    html=obj.map((post)=>{
+    html=obj.map((post,index)=>{
         var info=post.data;
        
         const {title, ups, upvote_ratio, num_comments,url,subreddit}=info;
+
+        
+
+        // Define thicker bottom border for the last row
+        const isLastItem = index === obj.length - 1;
+        const borderBottomStyle = isLastItem ? '4px solid var(--golden-yellow)' : '2px solid var(--test_color)';
+
         return`
-        <tr>
+        <tr style="border-bottom: ${borderBottomStyle};">
         <td>
         <a class="post-title" href="${url}" target="_blank">${title}</a>
         </td>

@@ -30,7 +30,9 @@ body{
     text-align: center;
     margin: 30px 0;
 }
-
+.length-input{
+    margin-left: 20px;
+}
 .table-wrapper{
     padding: 0 25px;
     overflow-x:auto;
@@ -62,11 +64,13 @@ th, td {
     border-bottom: 2px solid var(--test_color); /* Bottom border for all cells */
 }
 
+
 table#posts-container .subreddit-title{
     font-size:1.5rem;
     border-bottom: 1px solid var(--test_color);
     padding: 20px 0;
     background-color:blue;
+    color:#93cb5b;
 }
 
 .last-td{
