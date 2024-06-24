@@ -33,6 +33,16 @@ body{
 .length-input{
     margin-left: 20px;
 }
+
+#sub-input-container{
+    margin-left:30px;
+}
+
+#subreddit-list{
+    margin: 20px 20px;
+    list-style-type:none;
+}
+
 .table-wrapper{
     padding: 0 25px;
     overflow-x:auto;
@@ -45,6 +55,11 @@ table{
     table-layout:fixed;
     border-collapse:collapse;
     margin-bottom:20px;
+}
+
+#likes:hover{
+    background-color:#dfdfe2;
+    cursor:pointer;
 }
 a{
     color:var(--dark-navy);
