@@ -87,7 +87,7 @@ function process_data(obj){
     html=obj.map((post,index)=>{
         var info=post.data;
        
-        const {title, ups, upvote_ratio, num_comments,url,subreddit}=info;
+        const {title, ups, upvote_ratio, num_comments,permalink,subreddit}=info;
 
         
 
@@ -98,7 +98,7 @@ function process_data(obj){
         return`
         <tr style="border-bottom: ${borderBottomStyle};">
         <td>
-        <a class="post-title" href="${url}" target="_blank">${title}</a>
+        <a class="post-title" href="https://www.reddit.com/${permalink}" target="_blank">${title}</a>
         </td>
        <td>${ups}</td>
        <td>${upvote_ratio}</td>
