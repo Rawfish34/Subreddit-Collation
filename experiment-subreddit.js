@@ -7,7 +7,7 @@ const clear_all_button=document.getElementById("clear-btn")
 const subsFromLocalStorage=JSON.parse(localStorage.getItem("subreddits"));
 const sub_length_input=document.getElementById("sub-length");
 const sub_length_button=document.getElementById("sub-length-btn");
-var subLength=10;
+var subLength=12;
 
 //EVENT LISTENERS
 sub_button.addEventListener("click",addSub)
@@ -64,7 +64,7 @@ function addSub(){
 
 async function fetchSubTopics(subreddit){
     try{
-        const response=await fetch(`https://www.reddit.com/r/${subreddit}/hot/.json?limit=8`);
+        const response=await fetch(`https://www.reddit.com/r/${subreddit}/hot/.json?limit=${subLength}`);
         const data= await response.json();
         captureData(data);
     }
@@ -82,7 +82,7 @@ function captureData(data){
 
 function process_data(obj){
     var subreddit_name=obj[0].data.subreddit;
-    postsContainer.innerHTML+=`<tr class="subreddit-title">${subreddit_name}</tr>`
+    postsContainer.innerHTML+=`<div class="subreddit-title" style="font-size: 1.5rem; background-color: var(--medium-grey);">${subreddit_name}</div>`
     let html='';
     html=obj.map((post,index)=>{
         var info=post.data;
