@@ -30,6 +30,7 @@ sub_length_input.addEventListener("keydown",(e)=>{
 })
 //sorter event listeners
 likes.addEventListener("click",sort_subs)
+time_created.addEventListener("click", sort_subs_date)
 
 //LOCAL STORAGE
 if (subsFromLocalStorage){
@@ -70,6 +71,7 @@ function process_subs(arr){
     })
 }
 
+//DELETE INDIVIDUAL AND ADD INDIVIDUAL SUBS
 function deleteIndSub(index){
     subreddit_arr.splice(index, 1);
     localStorage.setItem("subreddits", JSON.stringify(subreddit_arr));
@@ -83,7 +85,7 @@ function addSub(){
     process_subs(subreddit_arr);
 }
 
-
+//GRABBING THE DATA
 async function fetchSubTopics(subreddit){
     try{
         const response=await fetch(`https://www.reddit.com/r/${subreddit}/hot/.json?limit=${subLength}`);
@@ -100,21 +102,14 @@ function captureData(data){
     const data_children=data.data.children;
     const children_arr_sliced=data_children.slice(0,`${subLength}`)
     console.log(children_arr_sliced);
-    if (isSorted_likes){
-        children_arr_sliced.sort((a,b)=>{
-            if (a.data.ups<b.data.ups){
-                return 1;
-            }
-            else if (a.data.ups>b.data.ups){
-                return -1;
-            }
-        })
-        
-    }
+
+    sort_arr(children_arr_sliced);
+    
     
     process_data(children_arr_sliced)
 }
 
+//MAIN FUNCTION
 function process_data(obj){
     var subreddit_name=obj[0].data.subreddit;
     postsContainer.innerHTML+=`<div class="subreddit-title" style="font-size: 1.5rem; background-color: var(--medium-grey); font-family: 'Montserrat', sans-serif;">${subreddit_name}</div>`
@@ -124,7 +119,7 @@ function process_data(obj){
        
         const {title, ups, upvote_ratio, num_comments,permalink, created_utc, subreddit}=info;
 
-        //GET TIME SINCE CREATED
+        //Get time since created
         var timeSince=time_calc(created_utc)
         
 
@@ -152,10 +147,46 @@ function process_data(obj){
 //SORT AND OTHER FLAVOR FUNCTIONS
 function sort_subs(){
     isSorted_likes=!isSorted_likes;
+    isSorted_date=false;
     process_subs(subreddit_arr);
 }
 
-//TIME created since function
+function sort_subs_date(){
+    isSorted_date=!isSorted_date;
+    isSorted_likes=false;
+    process_subs(subreddit_arr);
+}
+
+//main sort function
+function sort_arr(arr){
+    if (isSorted_likes){
+        arr.sort((a,b)=>{
+            if (a.data.ups<b.data.ups){
+                return 1;
+            }
+            else if (a.data.ups>b.data.ups){
+                return -1;
+            }
+        })
+        
+    }
+    if (isSorted_date){
+        arr.sort((a,b)=>{
+            if (a.data.created_utc<b.data.created_utc){
+                return 1
+            }
+            else if(a.data.created_utc>b.data.created_utc){
+                return -1;
+            }
+        })
+    }
+    else {
+        return arr;
+    }
+
+}
+
+//TIME SINCE CREATED FUNCTION
 function time_calc(createdTime){
     const currentTime=Math.floor(Date.now()/1000)//in seconds
     const time_dif_seconds=currentTime-createdTime

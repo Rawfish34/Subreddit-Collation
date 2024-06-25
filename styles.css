@@ -57,10 +57,12 @@ table{
     margin-bottom:20px;
 }
 
-#likes:hover{
+#likes:hover,#time-created:hover{
     background-color:#dfdfe2;
     cursor:pointer;
 }
+
+
 a{
     color:var(--dark-navy);
 }
