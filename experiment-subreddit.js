@@ -10,8 +10,10 @@ const sub_length_button=document.getElementById("sub-length-btn");
 var subLength=12;
 var isSorted_likes=false;
 var isSorted_date=false;
+var isSorted_replies=false;
 const likes=document.getElementById("likes");
 const time_created=document.getElementById("time-created");
+const replies=document.getElementById("replies");
 
 
 //EVENT LISTENERS
@@ -31,6 +33,7 @@ sub_length_input.addEventListener("keydown",(e)=>{
 //sorter event listeners
 likes.addEventListener("click",sort_subs)
 time_created.addEventListener("click", sort_subs_date)
+replies.addEventListener("click", sort_subs_replies);
 
 //LOCAL STORAGE
 if (subsFromLocalStorage){
@@ -148,12 +151,21 @@ function process_data(obj){
 function sort_subs(){
     isSorted_likes=!isSorted_likes;
     isSorted_date=false;
+    isSorted_replies=false;
     process_subs(subreddit_arr);
 }
 
 function sort_subs_date(){
     isSorted_date=!isSorted_date;
     isSorted_likes=false;
+    isSorted_replies=false;
+    process_subs(subreddit_arr);
+}
+
+function sort_subs_replies(){
+    isSorted_replies=!isSorted_replies
+    isSorted_likes=false;
+    isSorted_date=false;
     process_subs(subreddit_arr);
 }
 
@@ -170,7 +182,7 @@ function sort_arr(arr){
         })
         
     }
-    if (isSorted_date){
+    else if (isSorted_date){
         arr.sort((a,b)=>{
             if (a.data.created_utc<b.data.created_utc){
                 return 1
@@ -180,6 +192,17 @@ function sort_arr(arr){
             }
         })
     }
+    else if (isSorted_replies){
+        arr.sort((a,b)=>{
+            if (a.data.num_comments<b.data.num_comments){
+                return 1
+            }
+            else if(a.data.num_comments>b.data.num_comments){
+                return -1;
+            }
+        })
+    }
+
     else {
         return arr;
     }

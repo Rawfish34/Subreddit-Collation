@@ -57,7 +57,7 @@ table{
     margin-bottom:20px;
 }
 
-#likes:hover,#time-created:hover{
+#likes:hover,#time-created:hover,#replies:hover{
     background-color:#dfdfe2;
     cursor:pointer;
 }
