@@ -8,8 +8,10 @@ const subsFromLocalStorage=JSON.parse(localStorage.getItem("subreddits"));
 const sub_length_input=document.getElementById("sub-length");
 const sub_length_button=document.getElementById("sub-length-btn");
 var subLength=12;
-var isSorted=false;
-const likes=document.getElementById("likes")
+var isSorted_likes=false;
+var isSorted_date=false;
+const likes=document.getElementById("likes");
+const time_created=document.getElementById("time-created");
 
 
 //EVENT LISTENERS
@@ -26,7 +28,7 @@ sub_length_input.addEventListener("keydown",(e)=>{
         changeLength();
     }
 })
-
+//sorter event listeners
 likes.addEventListener("click",sort_subs)
 
 //LOCAL STORAGE
@@ -98,7 +100,7 @@ function captureData(data){
     const data_children=data.data.children;
     const children_arr_sliced=data_children.slice(0,`${subLength}`)
     console.log(children_arr_sliced);
-    if (isSorted){
+    if (isSorted_likes){
         children_arr_sliced.sort((a,b)=>{
             if (a.data.ups<b.data.ups){
                 return 1;
@@ -149,7 +151,7 @@ function process_data(obj){
 
 //SORT AND OTHER FLAVOR FUNCTIONS
 function sort_subs(){
-    isSorted=!isSorted;
+    isSorted_likes=!isSorted_likes;
     process_subs(subreddit_arr);
 }
 
